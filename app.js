@@ -64,9 +64,26 @@ function buildPromoCarousel(){
     const slide = document.createElement('div');
     slide.className = 'promo-slide' + (i === 0 ? ' active' : '');
     slide.innerHTML = `
-      <div class="promo-sachet" style="background:${p.color}">
-        <div class="promo-sachet-word">ADITYAS</div>
-        <div class="promo-sachet-name">${p.name.toUpperCase()}</div>
+      <div class="promo-sachet-wrap">
+        <div class="promo-sachet" style="background:linear-gradient(170deg, ${p.color}33 0%, ${p.color}18 32%, #080E18 78%)">
+          <div class="promo-sachet-seal promo-seal-top"></div>
+          <div class="promo-sachet-seal promo-seal-bottom"></div>
+          <div class="promo-sachet-notch"></div>
+          <div class="promo-sachet-inner">
+            <div class="promo-sachet-brandmark">
+              ${sachetRingSVG(p.color)}
+              <div class="promo-sachet-word">ADITYAS</div>
+              <div class="promo-sachet-subword">Mandala</div>
+            </div>
+            <div class="promo-sachet-divider"></div>
+            <div>
+              <div class="promo-sachet-formula">${p.name.toUpperCase()}</div>
+              <div class="promo-sachet-deity">${p.deity}</div>
+            </div>
+            <div class="promo-sachet-tagline">Ancient Wisdom.<br>Modern Vitality.</div>
+          </div>
+        </div>
+        <p class="promo-sachet-caption">${p.clock} o'clock · ${p.color}</p>
       </div>
       <div class="promo-info">
         <p class="promo-deity">${p.deity}</p>
@@ -96,6 +113,21 @@ function buildPromoCarousel(){
   carousel.addEventListener('focusout', startPromoTimer);
 
   startPromoTimer();
+}
+
+// Small illuminated ring motif for the sachet mark — echoes the mandala without depicting it
+function sachetRingSVG(color){
+  return `<svg class="promo-sachet-ring" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="50" cy="50" r="46" stroke="${color}" stroke-width="1" opacity="0.5" fill="none"/>
+    <circle cx="50" cy="50" r="38" stroke="${color}" stroke-width="0.6" opacity="0.35" fill="none"/>
+    ${Array.from({length:12}).map((_,i)=>{
+      const isFilled = i===0;
+      const angle = i*30;
+      return `<ellipse cx="50" cy="50" rx="6" ry="13" transform="translate(0,-24) rotate(${angle} 50 74)"
+              fill="${isFilled?color:'none'}" stroke="${color}" stroke-width="0.7" opacity="${isFilled?0.95:0.4}"/>`;
+    }).join('')}
+    <circle cx="50" cy="50" r="7" fill="${color}" opacity="0.9"/>
+  </svg>`;
 }
 
 function goToPromo(newIndex){
@@ -188,6 +220,10 @@ function buildShopGrid(){
   });
 }
 
+function getOrderedProducts(){
+  return [...PRODUCTS].sort((a,b) => (a.clock===12?0:a.clock) - (b.clock===12?0:b.clock));
+}
+
 // ---------- Render a product page ----------
 function renderProduct(id){
   const p = getProduct(id);
@@ -224,10 +260,21 @@ function renderProduct(id){
 
   const directBtn = document.getElementById('buy-direct');
   directBtn.onclick = () => {
-    alert('Direct shop is coming soon. Email adityasmandala@outlook.com to be notified when ' + p.name + ' launches on our site.');
+    alert('Direct shop is coming soon. Email info@adityasmandala.com to be notified when ' + p.name + ' launches on our site.');
   };
 
   document.title = `${p.name} — Adityas Mandala`;
+
+  // Prev/next by clock/month position
+  const ordered = getOrderedProducts();
+  const idx = ordered.findIndex(x => x.id === p.id);
+  const prevP = ordered[(idx - 1 + ordered.length) % ordered.length];
+  const nextP = ordered[(idx + 1) % ordered.length];
+
+  document.getElementById('clock-nav-prev').href = `#/product/${prevP.id}`;
+  document.getElementById('clock-nav-prev-label').textContent = prevP.name;
+  document.getElementById('clock-nav-next').href = `#/product/${nextP.id}`;
+  document.getElementById('clock-nav-next-label').textContent = nextP.name;
 }
 
 // ---------- Router ----------

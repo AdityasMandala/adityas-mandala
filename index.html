@@ -5,6 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Adityas Mandala — Ancient Wisdom. Modern Vitality.</title>
 <meta name="description" content="Twelve turmeric-and-botanical wellness shots, each named in honor of a Rigvedic solar deity. Handcrafted in Colorado.">
+<meta property="og:title" content="Adityas Mandala — Ancient Wisdom. Modern Vitality.">
+<meta property="og:description" content="Twelve turmeric-and-botanical wellness shots, each named in honor of a Rigvedic solar deity.">
+<meta property="og:image" content="https://www.adityasmandala.com/mandala-hero.jpg">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Playfair+Display:ital,wght@0,500;1,500;1,600&family=Cormorant+Garamond:ital@1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
@@ -47,6 +53,17 @@
   <a href="#/" class="back-link">← Back to the Mandala</a>
 
   <article class="product-article">
+    <nav class="product-clock-nav">
+      <a href="#" class="clock-nav-arrow clock-nav-prev" id="clock-nav-prev" aria-label="Previous formula">
+        <span class="clock-nav-arrow-icon">←</span>
+        <span class="clock-nav-label" id="clock-nav-prev-label"></span>
+      </a>
+      <a href="#" class="clock-nav-arrow clock-nav-next" id="clock-nav-next" aria-label="Next formula">
+        <span class="clock-nav-label" id="clock-nav-next-label"></span>
+        <span class="clock-nav-arrow-icon">→</span>
+      </a>
+    </nav>
+
     <header class="product-hero" id="product-hero">
       <div class="product-hero-swatch" id="product-swatch"></div>
       <div class="product-hero-text">
@@ -139,9 +156,10 @@
 </main>
 
 <footer class="site-footer">
-  <p>Adityas Mandala LLC · Colorado · <a href="mailto:adityasmandala@outlook.com">adityasmandala@outlook.com</a></p>
+  <p>Adityas Mandala LLC · Colorado · <a href="mailto:info@adityasmandala.com">info@adityasmandala.com</a></p>
 </footer>
 
+<script defer src="/_vercel/insights/script.js"></script>
 <script src="data.js"></script>
 <script src="app.js"></script>
 </body>
