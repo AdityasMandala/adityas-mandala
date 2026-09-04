@@ -14,39 +14,92 @@ function showView(name){
   window.scrollTo(0,0);
 }
 
-// ---------- Build the mandala ring ----------
+// ---------- Build hotspots over the mandala image ----------
+// Coordinates calibrated against mandala-hero.jpg's actual leaf positions
+// (sampled from the source artwork: leaves sit ~34% of the image radius from center).
 function buildMandala(){
-  const ring = document.getElementById('mandala-ring');
-  PRODUCTS.forEach((p, i) => {
-    // wrap points "down" (south) at 0deg by default (transform-origin is at its top).
-    // Adding 180deg makes clock=0 (12 o'clock) point up/north, then +30deg per hour, clockwise.
-    const wrapAngle = (p.clock * 30 + 180) % 360;
+  const layer = document.getElementById('mandala-hotspots');
+  const radiusPct = 33.9;
+  PRODUCTS.forEach(p => {
+    const angleDeg = (p.clock % 12) * 30;
+    const angleRad = angleDeg * Math.PI / 180;
+    const leftPct = 50 + radiusPct * Math.sin(angleRad);
+    const topPct = 50 - radiusPct * Math.cos(angleRad);
 
-    const wrap = document.createElement('div');
-    wrap.className = 'petal-wrap';
-    wrap.style.transform = `rotate(${wrapAngle}deg)`;
-
-    const inner = document.createElement('a');
-    inner.href = `#/product/${p.id}`;
-    inner.className = 'petal-inner';
-    // counter-rotate the leaf+label so they stay upright regardless of wrap angle
-    inner.style.setProperty('--counter-rotate', `${-wrapAngle}deg`);
-    inner.style.setProperty('--pulse-delay', `${i * 0.4}s`);
-    inner.setAttribute('aria-label', `${p.name} — ${p.deity}`);
-
-    const shape = document.createElement('div');
-    shape.className = 'petal-shape';
-    shape.style.background = p.color;
-
-    const label = document.createElement('span');
-    label.className = 'petal-label';
-    label.textContent = p.name.replace('Golden ', '');
-
-    inner.appendChild(shape);
-    inner.appendChild(label);
-    wrap.appendChild(inner);
-    ring.appendChild(wrap);
+    const hotspot = document.createElement('a');
+    hotspot.href = `#/product/${p.id}`;
+    hotspot.className = 'hotspot';
+    hotspot.style.left = `${leftPct}%`;
+    hotspot.style.top = `${topPct}%`;
+    hotspot.setAttribute('aria-label', `${p.name} — ${p.deity}`);
+    layer.appendChild(hotspot);
   });
+}
+
+// ---------- Promo carousel ----------
+let promoIndex = 0;
+let promoTimer = null;
+const PROMO_INTERVAL = 8000; // 8s: long enough to read a headline + 3 benefits, short enough to keep motion feeling alive
+
+function buildPromoCarousel(){
+  const track = document.getElementById('promo-track');
+  const dotsWrap = document.getElementById('promo-dots');
+  track.innerHTML = '';
+  dotsWrap.innerHTML = '';
+
+  PRODUCTS.forEach((p, i) => {
+    const slide = document.createElement('div');
+    slide.className = 'promo-slide' + (i === 0 ? ' active' : '');
+    slide.innerHTML = `
+      <div class="promo-sachet" style="background:${p.color}">
+        <div class="promo-sachet-word">ADITYAS</div>
+        <div class="promo-sachet-name">${p.name.toUpperCase()}</div>
+      </div>
+      <div class="promo-info">
+        <p class="promo-deity">${p.deity}</p>
+        <h3 class="promo-name">${p.name}</h3>
+        <ul class="promo-benefits">
+          ${p.benefits.slice(0,3).map(b => `<li>${b}</li>`).join('')}
+        </ul>
+        <a class="promo-link" href="#/product/${p.id}">Discover ${p.name} →</a>
+      </div>
+    `;
+    track.appendChild(slide);
+
+    const dot = document.createElement('button');
+    dot.className = 'promo-dot' + (i === 0 ? ' active' : '');
+    dot.setAttribute('aria-label', `Show ${p.name}`);
+    dot.onclick = () => goToPromo(i);
+    dotsWrap.appendChild(dot);
+  });
+
+  document.getElementById('promo-prev').onclick = () => goToPromo(promoIndex - 1);
+  document.getElementById('promo-next').onclick = () => goToPromo(promoIndex + 1);
+
+  const carousel = document.getElementById('promo-carousel');
+  carousel.addEventListener('mouseenter', stopPromoTimer);
+  carousel.addEventListener('mouseleave', startPromoTimer);
+  carousel.addEventListener('focusin', stopPromoTimer);
+  carousel.addEventListener('focusout', startPromoTimer);
+
+  startPromoTimer();
+}
+
+function goToPromo(newIndex){
+  const slides = document.querySelectorAll('.promo-slide');
+  const dots = document.querySelectorAll('.promo-dot');
+  const count = slides.length;
+  promoIndex = ((newIndex % count) + count) % count;
+  slides.forEach((s, i) => s.classList.toggle('active', i === promoIndex));
+  dots.forEach((d, i) => d.classList.toggle('active', i === promoIndex));
+}
+
+function startPromoTimer(){
+  stopPromoTimer();
+  promoTimer = setInterval(() => goToPromo(promoIndex + 1), PROMO_INTERVAL);
+}
+function stopPromoTimer(){
+  if(promoTimer) clearInterval(promoTimer);
 }
 
 // ---------- Build shop grid ----------
@@ -134,6 +187,7 @@ function router(){
 // ---------- Init ----------
 document.addEventListener('DOMContentLoaded', () => {
   buildMandala();
+  buildPromoCarousel();
   document.getElementById('story-intro-text').textContent = STORY_INTRO;
   window.addEventListener('hashchange', router);
   router();

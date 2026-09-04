@@ -49,78 +49,108 @@ a{color:inherit;}
 .word-mandala{font-family:var(--serif-italic); font-style:italic; font-size:clamp(1.6rem,5vw,2.6rem); color:var(--solar-gold);}
 .slogan{font-family:var(--serif-italic); font-style:italic; color:var(--gold-light); margin:.4rem 0 0; font-size:1.05rem; letter-spacing:.02em;}
 
-/* ============ MANDALA STAGE ============ */
+/* ============ MANDALA STAGE (image + hotspots) ============ */
 .mandala-stage{
   position:relative; z-index:1;
-  display:flex; align-items:center; justify-content:center;
   width:min(90vw, 620px);
   aspect-ratio:1/1;
   margin:2.5rem auto 1rem;
 }
-.mandala-ring{
-  position:relative; width:100%; height:100%;
-}
-
-.mandala-center{
-  position:absolute; top:50%; left:50%; transform:translate(-50%,-50%);
-  width:26%; height:26%;
+.mandala-image{
+  width:100%; height:100%; display:block;
   border-radius:50%;
-  border:1px solid rgba(201,148,10,.5);
-  display:flex; align-items:center; justify-content:center;
-  text-align:center;
+  filter:drop-shadow(0 0 40px rgba(201,148,10,.15));
 }
-.lotus-glow{
-  position:absolute; inset:12%;
+.mandala-hotspots{ position:absolute; inset:0; }
+.hotspot{
+  position:absolute;
+  width:15%; height:15%;
+  transform:translate(-50%,-50%);
   border-radius:50%;
-  background:radial-gradient(circle, var(--gold-bright) 0%, var(--solar-gold) 45%, transparent 75%);
-  filter:blur(2px);
-  animation:pulse-glow 5s ease-in-out infinite;
-}
-@keyframes pulse-glow{ 0%,100%{opacity:.75; transform:scale(1);} 50%{opacity:1; transform:scale(1.06);} }
-.mandala-center-label{
-  position:relative; z-index:1;
-  font-family:var(--caps); font-size:.65rem; letter-spacing:.14em;
-  color:var(--cosmic-night); font-weight:700; line-height:1.4;
-}
-
-.petal-wrap{
-  position:absolute; top:50%; left:50%;
-  width:2px; height:42%;
-  transform-origin:50% 0%;
-}
-.petal-inner{
-  position:absolute; bottom:0; left:50%;
-  width:19%; height:19%;
-  min-width:56px; min-height:56px; max-width:92px; max-height:92px;
-  transform:translate(-50%,0) rotate(var(--counter-rotate, 0deg));
   cursor:pointer;
-  display:block;
+  background:radial-gradient(circle, rgba(255,255,255,0) 60%, rgba(255,255,255,0) 100%);
+  transition:background .2s ease, box-shadow .2s ease;
 }
-.petal-shape{
-  width:100%; height:100%;
-  border-radius:50% 50% 50% 50% / 62% 62% 38% 38%;
-  opacity:.92;
-  transition:opacity .25s ease, filter .25s ease, transform .25s ease;
-  box-shadow:0 0 18px rgba(0,0,0,.35);
-  animation:petal-pulse 7s ease-in-out infinite;
-  animation-delay:var(--pulse-delay, 0s);
+.hotspot:hover, .hotspot:focus-visible{
+  background:radial-gradient(circle, rgba(255,255,255,.16) 0%, rgba(255,255,255,0) 72%);
+  box-shadow:0 0 0 2px rgba(250,243,224,.5);
+  outline:none;
 }
-.petal-inner:hover .petal-shape, .petal-inner:focus-visible .petal-shape{
-  opacity:1;
-  filter:brightness(1.22);
-  transform:scale(1.1);
-}
-@keyframes petal-pulse{ 0%,100%{filter:brightness(1);} 50%{filter:brightness(1.15);} }
-.petal-label{
-  position:absolute; top:108%; left:50%; transform:translateX(-50%);
-  font-family:var(--caps); font-size:.5rem; letter-spacing:.05em;
-  color:var(--sacred-cream); text-align:center; width:140%;
-  pointer-events:none; font-weight:600; white-space:nowrap;
-  opacity:.8;
-}
-.petal-inner:focus-visible{ outline:2px solid var(--sacred-cream); outline-offset:4px; border-radius:50%; }
 
 .splash-hint{position:relative; z-index:1; text-align:center; color:rgba(250,243,224,.55); font-size:.9rem; margin:.5rem 0 2rem;}
+
+/* ============ PROMO CAROUSEL ============ */
+.promo-carousel{
+  position:relative; z-index:1;
+  max-width:640px; margin:0 auto 2.5rem;
+  padding:0 3rem;
+}
+.promo-track{
+  position:relative;
+  min-height:190px;
+  border:1px solid rgba(201,148,10,.3);
+  border-radius:8px;
+  background:rgba(250,243,224,.03);
+  overflow:hidden;
+}
+.promo-slide{
+  position:absolute; inset:0;
+  display:flex; align-items:center; gap:1.4rem;
+  padding:1.5rem;
+  opacity:0;
+  transition:opacity .6s ease;
+  pointer-events:none;
+}
+.promo-slide.active{ opacity:1; pointer-events:auto; }
+
+.promo-sachet{
+  flex-shrink:0; width:64px; height:150px;
+  border-radius:6px 6px 16px 16px;
+  position:relative;
+  box-shadow:0 6px 20px rgba(0,0,0,.4);
+}
+.promo-sachet::before{
+  content:''; position:absolute; top:0; left:0; right:0; height:14px;
+  background:repeating-linear-gradient(90deg, rgba(8,14,24,.5) 0 3px, transparent 3px 7px);
+  border-radius:6px 6px 0 0;
+}
+.promo-sachet-word{
+  position:absolute; top:26px; left:0; right:0; text-align:center;
+  font-family:var(--caps); font-size:.4rem; letter-spacing:.1em; color:rgba(8,14,24,.55);
+}
+.promo-sachet-name{
+  position:absolute; bottom:14px; left:0; right:0; text-align:center;
+  font-family:var(--serif-display); font-size:.62rem; font-weight:700; color:rgba(8,14,24,.75);
+  padding:0 4px; line-height:1.15;
+}
+
+.promo-info{flex:1; min-width:0;}
+.promo-deity{font-family:var(--serif-italic); font-style:italic; color:var(--gold-light); font-size:.85rem; margin:0 0 .1rem;}
+.promo-name{font-family:var(--serif-display); font-size:1.3rem; color:var(--sacred-cream); margin:0 0 .5rem;}
+.promo-benefits{margin:0 0 .7rem; padding-left:1.1rem; font-size:.82rem; color:rgba(250,243,224,.8);}
+.promo-benefits li{margin-bottom:.15rem;}
+.promo-link{font-size:.82rem; color:var(--solar-gold); text-decoration:none; border-bottom:1px solid rgba(201,148,10,.4);}
+.promo-link:hover{border-color:var(--solar-gold);}
+
+.promo-arrow{
+  position:absolute; top:50%; transform:translateY(-50%);
+  background:none; border:none; color:var(--gold-light);
+  font-size:2rem; line-height:1; cursor:pointer; padding:.5rem;
+  opacity:.6; transition:opacity .2s;
+}
+.promo-arrow:hover{opacity:1;}
+.promo-prev{left:0;}
+.promo-next{right:0;}
+
+.promo-dots{display:flex; justify-content:center; gap:.4rem; margin-top:.8rem;}
+.promo-dot{width:6px; height:6px; border-radius:50%; background:rgba(250,243,224,.25); border:none; cursor:pointer; padding:0;}
+.promo-dot.active{background:var(--solar-gold);}
+
+@media (max-width:520px){
+  .promo-carousel{padding:0 2.2rem;}
+  .promo-slide{flex-direction:column; text-align:center; gap:.8rem;}
+  .promo-benefits{padding-left:0; list-style:none;}
+}
 
 .splash-nav{position:relative; z-index:1; display:flex; justify-content:center; gap:2rem; flex-wrap:wrap; padding-bottom:3rem; font-size:.9rem;}
 .splash-nav a{text-decoration:none; color:var(--gold-light); border-bottom:1px solid transparent; padding-bottom:2px; transition:border-color .2s;}
