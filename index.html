@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Adityas Mandala — Ancient Wisdom. Modern Vitality.</title>
+<meta name="description" content="Twelve turmeric-and-botanical wellness shots, each named in honor of a Rigvedic solar deity. Handcrafted in Colorado.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700&family=Playfair+Display:ital,wght@0,500;1,500;1,600&family=Cormorant+Garamond:ital@1&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<!-- ============ SPLASH / MANDALA VIEW ============ -->
+<main id="splash-view" class="view">
+  <div class="stars" aria-hidden="true"></div>
+
+  <header class="masthead">
+    <div class="wordmark"><span class="word-adityas">ADITYAS</span><span class="word-mandala">Mandala</span></div>
+    <p class="slogan">Ancient Wisdom. Modern Vitality.</p>
+  </header>
+
+  <div class="mandala-stage">
+    <div class="mandala-ring" id="mandala-ring">
+      <!-- petals injected by app.js -->
+      <div class="mandala-center">
+        <div class="lotus-glow"></div>
+        <span class="mandala-center-label">the twelve<br>Adityas</span>
+      </div>
+    </div>
+  </div>
+
+  <p class="splash-hint">Select a formula to learn its story</p>
+
+  <nav class="splash-nav">
+    <a href="#/mandala">The Mandala &amp; Our Story</a>
+    <a href="#/find-your-aditya">Find Your Aditya</a>
+    <a href="#/shop">All Formulas</a>
+  </nav>
+</main>
+
+<!-- ============ PRODUCT DETAIL VIEW ============ -->
+<main id="product-view" class="view hidden">
+  <a href="#/" class="back-link">← Back to the Mandala</a>
+
+  <article class="product-article">
+    <header class="product-hero" id="product-hero">
+      <div class="product-hero-swatch" id="product-swatch"></div>
+      <div class="product-hero-text">
+        <p class="product-eyebrow" id="product-position"></p>
+        <h1 class="product-deity" id="product-deity"></h1>
+        <h2 class="product-name" id="product-name"></h2>
+        <p class="product-tagline" id="product-tagline"></p>
+        <div class="buy-row">
+          <a id="buy-amazon" class="btn btn-primary" target="_blank" rel="noopener">Find on Amazon</a>
+          <button id="buy-direct" class="btn btn-secondary">Notify Me — Shop Direct</button>
+        </div>
+      </div>
+    </header>
+
+    <section class="product-section myth-section">
+      <h3>The Myth</h3>
+      <p id="product-myth"></p>
+      <p class="myth-bridge" id="product-bridge"></p>
+    </section>
+
+    <section class="product-section">
+      <h3>Health Benefits</h3>
+      <ul class="benefit-list" id="product-benefits"></ul>
+    </section>
+
+    <div class="two-col">
+      <section class="product-section">
+        <h3>Ingredients</h3>
+        <ul class="ingredient-list" id="product-ingredients"></ul>
+        <p class="ingredient-note">Full formulation on file. Amounts are calibrated per batch and intentionally not listed here — ask us directly if you'd like more detail.</p>
+      </section>
+      <section class="product-section">
+        <h3>Taste &amp; Use</h3>
+        <p id="product-taste"></p>
+        <p class="use-instructions">Mix one sachet into 8–12 oz warm water, coconut milk, or a smoothie. Stir 20–30 seconds until dissolved. Store in a cool, dry place — no refrigeration needed.</p>
+      </section>
+    </div>
+
+    <section class="product-section precautions-section" id="precautions">
+      <h3>Precautions</h3>
+      <p class="precautions-intro">
+        <strong>What "precautions" means here.</strong> The items below are precautions — not predictions. They tell you what we know, or reasonably suspect, could interact poorly with specific ingredients in this formula. Listing a precaution is not a claim that a reaction will happen if you don't follow it, and no listed precaution for your situation is not a guarantee that nothing can happen. Every body is different. If you have a health condition, take medication, are pregnant or nursing, or are simply unsure — ask a doctor or pharmacist before adding anything new, including this, to your routine.
+      </p>
+      <p class="precautions-intro">
+        <strong>What this product is, and isn't.</strong> This is a dietary supplement made from turmeric and botanical ingredients — plant roots, extracts, and herbs. It is not a drug, and it has not been reviewed or approved by the FDA or any medical body for safety or effectiveness the way a pharmaceutical is. Natural does not mean risk-free: several ingredients here are potent precisely because they're biologically active, which is also why they can interact with medications or existing conditions.
+      </p>
+      <ul class="precaution-list" id="product-precautions"></ul>
+      <p class="precautions-boilerplate">
+        These statements have not been evaluated by the Food and Drug Administration. This product is not intended to diagnose, treat, cure, or prevent any disease. This is not medical advice, and nothing on this page substitutes for a conversation with a qualified healthcare provider who knows your specific health history. Consult a doctor before use if you are pregnant, nursing, under 18, managing a chronic health condition, or taking prescription medication. If you experience an unexpected reaction of any kind, stop use and consult a healthcare provider.
+      </p>
+    </section>
+
+    <section class="product-section pairs-section">
+      <h3>Pairs Well With</h3>
+      <div class="pairs-row" id="product-pairs"></div>
+    </section>
+  </article>
+</main>
+
+<!-- ============ SIMPLE STORY / SHOP PLACEHOLDER VIEWS ============ -->
+<main id="mandala-story-view" class="view hidden">
+  <a href="#/" class="back-link">← Back to the Mandala</a>
+  <article class="story-article">
+    <h1>The Twelve Adityas</h1>
+    <p id="story-intro-text"></p>
+    <h2>What Is a Mandala</h2>
+    <p>Mandala — Sanskrit for "sacred circle" — is one of humanity's oldest and most universal spiritual symbols, representing wholeness: the self, the cosmos, and the cycles of nature unified in radial symmetry around a central point. Our twelve-leaf mandala places each Aditya at their precise position in the sacred wheel.</p>
+    <h2>The Gayatri Mantra</h2>
+    <p><em>Om Bhur Bhuvaḥ Svaḥ · Tat Savitur Vareṇyam · Bhargo Devasya Dhīmahi · Dhiyo Yo Naḥ Pracodayāt.</em></p>
+    <p>"We meditate on the divine light of that adorable sun — may it illuminate our intellect." The Gayatri Mantra is the most revered prayer of the Vedic tradition, addressed to Savitur, chanted at dawn as a daily invocation of clarity.</p>
+  </article>
+</main>
+
+<main id="shop-view" class="view hidden">
+  <a href="#/" class="back-link">← Back to the Mandala</a>
+  <article class="story-article">
+    <h1>All Formulas</h1>
+    <p>Twelve daily rituals, one turmeric foundation. Tap any formula to read its full story, ingredients, and precautions.</p>
+    <div class="shop-grid" id="shop-grid"></div>
+  </article>
+</main>
+
+<main id="quiz-view" class="view hidden">
+  <a href="#/" class="back-link">← Back to the Mandala</a>
+  <article class="story-article">
+    <h1>Find Your Aditya</h1>
+    <p>A short quiz to match your goals to a formula is coming soon. In the meantime, browse all twelve and read what resonates.</p>
+    <a href="#/shop" class="btn btn-primary">Browse All Formulas</a>
+  </article>
+</main>
+
+<footer class="site-footer">
+  <p>Adityas Mandala LLC · Colorado · <a href="mailto:adityasmandala@outlook.com">adityasmandala@outlook.com</a></p>
+</footer>
+
+<script src="data.js"></script>
+<script src="app.js"></script>
+</body>
+</html>
