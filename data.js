@@ -200,6 +200,52 @@ const PRODUCTS = [
   }
 ];
 
+const QUIZ_TREE = {
+  categories: [
+    {
+      id: "energy",
+      label: "Energy & Performance",
+      description: "Fuel, drive, and physical output",
+      options: [
+        { label: "All-day natural energy", productId: "golden-rise" },
+        { label: "Peak power before a workout", productId: "golden-storm" },
+        { label: "Faster recovery after exertion", productId: "golden-body" },
+      ]
+    },
+    {
+      id: "mind",
+      label: "Mind & Mood",
+      description: "Focus, calm, and emotional balance",
+      options: [
+        { label: "Focus & mental clarity", productId: "golden-mind" },
+        { label: "Stress & hormone balance", productId: "golden-balance" },
+        { label: "Mood & emotional resilience", productId: "golden-joy" },
+      ]
+    },
+    {
+      id: "body",
+      label: "Body & Recovery",
+      description: "Digestion, immunity, and rest",
+      options: [
+        { label: "Digestive comfort", productId: "golden-flow" },
+        { label: "Immune support", productId: "golden-shield" },
+        { label: "Better sleep", productId: "golden-rest" },
+      ]
+    },
+    {
+      id: "longevity",
+      label: "Long-Term Health & Beauty",
+      description: "Aging well, inside and out",
+      options: [
+        { label: "Longevity & cellular health", productId: "golden-years" },
+        { label: "Skin, hair & nails", productId: "golden-glow" },
+        { label: "Collagen & structural strength", productId: "golden-build" },
+      ]
+    },
+  ]
+};
+
 function getProduct(id) {
   return PRODUCTS.find(p => p.id === id);
 }
+

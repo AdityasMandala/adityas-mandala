@@ -14,6 +14,19 @@ function showView(name){
   window.scrollTo(0,0);
 }
 
+// ---------- Leaf icon (matches the mandala artwork's leaf style, upright, recolorable) ----------
+function leafSVG(color, size){
+  size = size || 100;
+  return `
+  <svg width="${size}" height="${size}" viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <path d="M50 4 C74 22, 86 46, 50 96 C14 46, 26 22, 50 4 Z"
+          fill="${color}" stroke="rgba(8,14,24,.45)" stroke-width="1.2"/>
+    <path d="M50 12 L50 90" stroke="rgba(8,14,24,.4)" stroke-width="1.3" fill="none"/>
+    <path d="M50 30 L34 20 M50 30 L66 20 M50 46 L31 36 M50 46 L69 36 M50 62 L34 54 M50 62 L66 54 M50 76 L40 70 M50 76 L60 70"
+          stroke="rgba(8,14,24,.32)" stroke-width="1" fill="none"/>
+  </svg>`;
+}
+
 // ---------- Build hotspots over the mandala image ----------
 // Coordinates calibrated against mandala-hero.jpg's actual leaf positions
 // (sampled from the source artwork: leaves sit ~34% of the image radius from center).
@@ -102,6 +115,61 @@ function stopPromoTimer(){
   if(promoTimer) clearInterval(promoTimer);
 }
 
+// ---------- Quiz ----------
+function renderQuizStep1(){
+  const c = document.getElementById('quiz-container');
+  c.innerHTML = `
+    <p class="quiz-step-label">Step 1 of 2 — What are you looking to improve?</p>
+    <div class="quiz-grid">
+      ${QUIZ_TREE.categories.map(cat => `
+        <button class="quiz-card" data-cat="${cat.id}">
+          <span class="quiz-card-label">${cat.label}</span>
+          <span class="quiz-card-desc">${cat.description}</span>
+        </button>
+      `).join('')}
+    </div>
+  `;
+  c.querySelectorAll('.quiz-card').forEach(btn => {
+    btn.onclick = () => renderQuizStep2(btn.dataset.cat);
+  });
+}
+
+function renderQuizStep2(catId){
+  const cat = QUIZ_TREE.categories.find(c => c.id === catId);
+  const c = document.getElementById('quiz-container');
+  c.innerHTML = `
+    <p class="quiz-step-label">Step 2 of 2 — ${cat.label}: which fits best?</p>
+    <div class="quiz-grid">
+      ${cat.options.map(opt => `
+        <button class="quiz-card" data-product="${opt.productId}">
+          <span class="quiz-card-label">${opt.label}</span>
+        </button>
+      `).join('')}
+    </div>
+    <button class="quiz-back" id="quiz-back-btn">← Choose a different focus</button>
+  `;
+  c.querySelectorAll('.quiz-card').forEach(btn => {
+    btn.onclick = () => renderQuizResult(btn.dataset.product);
+  });
+  document.getElementById('quiz-back-btn').onclick = renderQuizStep1;
+}
+
+function renderQuizResult(productId){
+  const p = getProduct(productId);
+  const c = document.getElementById('quiz-container');
+  c.innerHTML = `
+    <div class="quiz-result">
+      <div class="quiz-result-leaf">${leafSVG(p.color, 110)}</div>
+      <p class="quiz-result-deity">${p.deity}</p>
+      <h2 class="quiz-result-name">${p.name}</h2>
+      <p class="quiz-result-tagline">${p.tagline}</p>
+      <a class="btn btn-primary" href="#/product/${p.id}">See Full Story &amp; Precautions</a>
+      <button class="quiz-back" id="quiz-retake-btn">Retake the quiz</button>
+    </div>
+  `;
+  document.getElementById('quiz-retake-btn').onclick = renderQuizStep1;
+}
+
 // ---------- Build shop grid ----------
 function buildShopGrid(){
   const grid = document.getElementById('shop-grid');
@@ -111,7 +179,7 @@ function buildShopGrid(){
     card.href = `#/product/${p.id}`;
     card.className = 'shop-card';
     card.innerHTML = `
-      <div class="shop-swatch" style="background:${p.color}"></div>
+      <div class="shop-swatch">${leafSVG(p.color, 44)}</div>
       <p class="shop-card-deity">${p.deity}</p>
       <p class="shop-card-name">${p.name}</p>
       <p class="shop-card-tag">${p.tagline}</p>
@@ -125,7 +193,7 @@ function renderProduct(id){
   const p = getProduct(id);
   if(!p){ location.hash = '#/'; return; }
 
-  document.getElementById('product-swatch').style.background = p.color;
+  document.getElementById('product-swatch').innerHTML = leafSVG(p.color, 120);
   document.getElementById('product-position').textContent = `${p.clock} o'clock · ${p.month}`;
   document.getElementById('product-deity').textContent = p.deity;
   document.getElementById('product-name').textContent = p.name;
@@ -178,6 +246,7 @@ function router(){
     buildShopGrid();
     showView('shop');
   } else if(parts[0] === 'find-your-aditya'){
+    renderQuizStep1();
     showView('quiz');
   } else {
     showView('splash');

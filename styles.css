@@ -162,7 +162,7 @@ a{color:inherit;}
 .back-link:hover{text-decoration:underline;}
 
 .product-hero{display:flex; gap:2rem; align-items:flex-start; flex-wrap:wrap; margin-bottom:2.5rem;}
-.product-hero-swatch{width:120px; height:120px; border-radius:50% 50% 50% 50% / 60% 60% 40% 40%; flex-shrink:0; box-shadow:0 0 40px rgba(0,0,0,.4);}
+.product-hero-swatch{width:120px; height:120px; flex-shrink:0; filter:drop-shadow(0 4px 16px rgba(0,0,0,.4)); display:flex; align-items:center; justify-content:center;}
 .product-hero-text{flex:1; min-width:260px;}
 .product-eyebrow{font-family:var(--caps); font-size:.7rem; letter-spacing:.14em; color:var(--gold-light); margin:0 0 .3rem;}
 .product-deity{font-family:var(--serif-italic); font-style:italic; font-size:1.4rem; color:var(--gold-light); margin:0 0 .1rem; font-weight:500;}
@@ -217,7 +217,7 @@ a{color:inherit;}
 .shop-grid{display:grid; grid-template-columns:repeat(auto-fill, minmax(220px,1fr)); gap:1.2rem; margin-top:1.5rem;}
 .shop-card{display:block; text-decoration:none; padding:1.2rem; border-radius:6px; border:1px solid rgba(250,243,224,.15); transition:border-color .2s, transform .2s;}
 .shop-card:hover{border-color:var(--gold-light); transform:translateY(-2px);}
-.shop-swatch{width:36px; height:36px; border-radius:50%; margin-bottom:.8rem;}
+.shop-swatch{width:36px; height:36px; margin-bottom:.8rem;}
 .shop-card-deity{font-family:var(--serif-italic); font-style:italic; color:var(--gold-light); font-size:.85rem; margin:0 0 .2rem;}
 .shop-card-name{font-family:var(--serif-display); font-size:1.15rem; color:var(--sacred-cream); margin:0 0 .4rem;}
 .shop-card-tag{font-size:.8rem; color:rgba(250,243,224,.6); margin:0;}
@@ -225,5 +225,26 @@ a{color:inherit;}
 /* ============ FOOTER ============ */
 .site-footer{position:relative; z-index:1; text-align:center; padding:2rem 1rem 3rem; font-size:.8rem; color:rgba(250,243,224,.45);}
 .site-footer a{color:rgba(250,243,224,.6);}
+
+/* ============ QUIZ ============ */
+.quiz-step-label{font-family:var(--serif-italic); font-style:italic; color:var(--gold-light); font-size:1.05rem; margin:1.5rem 0 1.2rem;}
+.quiz-grid{display:grid; grid-template-columns:repeat(auto-fit, minmax(220px,1fr)); gap:1rem;}
+.quiz-card{
+  background:rgba(250,243,224,.04); border:1px solid rgba(250,243,224,.15); border-radius:8px;
+  padding:1.3rem; text-align:left; cursor:pointer; color:var(--sacred-cream);
+  display:flex; flex-direction:column; gap:.4rem;
+  transition:border-color .2s, transform .2s, background .2s;
+  font-family:var(--body);
+}
+.quiz-card:hover, .quiz-card:focus-visible{border-color:var(--gold-light); background:rgba(250,243,224,.08); transform:translateY(-2px); outline:none;}
+.quiz-card-label{font-family:var(--serif-display); font-size:1.1rem; color:var(--sacred-cream);}
+.quiz-card-desc{font-size:.85rem; color:rgba(250,243,224,.6);}
+.quiz-back{background:none; border:none; color:var(--gold-light); font-size:.85rem; cursor:pointer; margin-top:1.5rem; padding:0; text-decoration:underline;}
+
+.quiz-result{text-align:center; padding:2rem 1rem;}
+.quiz-result-leaf{display:flex; justify-content:center; margin-bottom:1rem; filter:drop-shadow(0 4px 16px rgba(0,0,0,.4));}
+.quiz-result-deity{font-family:var(--serif-italic); font-style:italic; color:var(--gold-light); font-size:1.1rem; margin:0;}
+.quiz-result-name{font-family:var(--serif-display); font-size:2rem; color:var(--sacred-cream); margin:.2rem 0 .5rem;}
+.quiz-result-tagline{color:rgba(250,243,224,.75); margin-bottom:1.5rem;}
 
 .view{position:relative;}
